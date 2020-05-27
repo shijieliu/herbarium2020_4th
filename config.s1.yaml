@@ -1,0 +1,88 @@
+MODEL:
+  BACKBONE:
+    TYP:
+      'se_resnext50_32x4d'
+    FREEZED:
+      False
+  CLASSIFIER:
+    CATEGORY_NUM:
+      32093
+    BIAS:
+      True
+
+CRITERION:
+  TYP:
+    'CrossEntropy'
+
+SESSION:
+  NAME:
+    'baseline'
+  SAVE_STEP:
+    5
+  SHOW_STEP:
+    10
+  VAL_STEP:
+    1000
+  MAX_EPOCH:
+    100
+  SAVEPATH:
+    './checkpoints'
+  RESUME:
+    latest.pth
+
+
+OPTIMIZER:
+  BASE_LR:
+    0.2
+  TYP:
+    'SGD'
+  WEIGHT_DECAY:
+    1e-4
+  MOMENTUM:
+    0.4
+  NESTEROV:
+    True
+
+LR_SCHEDULER:
+  TYP:
+    'multistep'
+  LR_STEP:
+    - 5
+    - 10
+    - 15
+  LR_FACTOR:
+    0.1
+
+TRAIN_DATA:
+  PATH:
+    'big_sep_train.txt'
+  BATCHSIZE: # for each gpu
+    16
+  NUM_WORKERS:
+    4
+  SAMPLER:
+    'default'
+  SHUFFLE:
+    True
+  TRANSFORMS:
+    - ('binary_crop', None)
+    - ('random_rotation', 10)
+    - ('resize', (448, 448))
+    - ('to_tensor', None)
+    - ('normalize', ([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]))
+
+VAL_DATA:
+  PATH:
+    'small_sep_val.txt'
+  BATCHSIZE: # for each gpu
+    128
+  NUM_WORKERS:
+    4
+  SAMPLER:
+    'default'
+  SHUFFLE:
+    False
+  TRANSFORMS:
+    - ('resize', (448, 448))
+    - ('to_tensor', None)
+    - ('normalize', ([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]))
