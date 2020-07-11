@@ -7,7 +7,10 @@ our method mainly refers the paper [A CLOSER LOOK AT FEW-SHOT CLASSIFICATION](ht
 4. we do not use cosine distance because cosine distance leads to slow converge  and low presion 
 5. we remove No.23079 class in train and test
 
+![](./pic.png)
+
 # Requirement
+
 1. install [apex](https://github.com/NVIDIA/apex) for distributed training support
 2. install requirements
 ```angular2
